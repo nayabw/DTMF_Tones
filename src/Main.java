@@ -11,6 +11,11 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /*      A simple Java project to take a .txt file with a list of DTMF tone codes, present the names to the user, and "dial" them when selected.
         Copyright (C) 2022 Nayab W.
@@ -30,16 +35,47 @@ import java.io.ByteArrayInputStream;
 
 public class Main {
 
-    public static void main(String[] args) throws LineUnavailableException, InterruptedException {
-        System.out.println("Hello world!");
-        String num = "0123456789ABCD*#";
-        char[] chars = num.toCharArray();
+    public static void main(String[] args) throws LineUnavailableException, InterruptedException, FileNotFoundException {
+        List<dtmf_code> codes = new ArrayList<>();
+
+        File file = new File("/Users/nayab/IdeaProjects/DTMF Tones/out/W5AC-v20.txt");
+        Scanner fileScan = new Scanner(file);
+        String currentCat = null;
+        while(fileScan.hasNextLine()) {
+            String line = fileScan.nextLine();
+
+            // Section headers are denoted as ; -----
+            if (line.contains("; -")) {
+                currentCat = line.substring(8);
+            }
+
+            // Ignore all comments
+            if (!line.equals("") && line.charAt(0) != ';') {
+                String[] bits = line.split(";");
+                String code = bits[0];
+                String name = bits[0];
+                // If a code has a name, find it.
+                if (bits.length == 2)
+                    name = bits[1];
+                codes.add(new dtmf_code(name, code, currentCat));
+            }
+        }
+        for (dtmf_code code: codes) {
+            playCode(code);
+            System.out.println("Played " + code.getName() + ". From " + code.getCategory());
+        }
+    }
+
+    public static void playCode(dtmf_code code) throws LineUnavailableException, InterruptedException {
+        playCode(code.getCode());
+    }
+    public static void playCode(String code) throws LineUnavailableException, InterruptedException {
+        char[] chars = code.toCharArray();
         for (char i: chars){
             process(i);
             Thread.sleep(256);
         }
     }
-
     // Adapted from TarosDSP, a library used in this project.
     // https://github.com/JorenSix/TarsosDSP
 
