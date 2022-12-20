@@ -11,5 +11,5 @@ The repeater controller can be "remote controlled" through a series of DTMF tone
 
 The program should read everything after the ``;`` as the code name and exectute all the preceding DTMF tones if selected. This is a LOT easier than dialing it yourself on a Handi-Talkie!
 
-# Who?
+## Who?
 [W5AC](http://w5ac.tamu.edu) is Texas A&M University's Amateur Radio Club, and I am an amateur radio operator serving on the executive committee (as of writing).
