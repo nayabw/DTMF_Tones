@@ -15,4 +15,4 @@ The program should read everything after the ``;`` as the code name and exectute
 [W5AC](http://w5ac.tamu.edu) is Texas A&M University's Amateur Radio Club, and I am an amateur radio operator serving on the executive committee (as of writing).
 
 ## How?
-This project uses [TarosDSP](https://github.com/JorenSix/TarsosDSP), which is licensed under GNU General Public License v3.0.
+This project uses [TarosDSP](https://github.com/JorenSix/TarsosDSP), which is licensed under [GNU General Public License v3.0.](https://github.com/nayabw/DTMF_Tones/blob/master/LICENSE.md)
